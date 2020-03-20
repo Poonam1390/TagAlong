@@ -1,4 +1,80 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 {% block body_content %}
-<h1>{{ title }}</h1>
-{% endblock body_content %}
+<a href="{{ url_for('delete') }}">delete plans</a>
+
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+            {{ form.h_id.label }}
+            {{ form.h_id }}
+            {% if form.h_id.errors %}
+                <div class="error">
+                    {% for error in form.h_id.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <br>
+            {{ form.name.label }}
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="error">
+                    {% for error in form.name.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <br>
+            {{ form.h_name.label }}
+            {{ form.h_name }}
+            {% if form.h_name.errors %}
+                <div class="error">
+                    {% for error in form.h_name.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <br>
+            {{ form.l_name.label }}
+            {{ form.l_name }}
+            {% if form.l_name.errors %}
+                <div class="error">
+                    {% for error in form.l_name.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <br>
+            {{ form.time.label }}
+            {{ form.time }}
+            {% if form.time.errors %}
+                <div class="error">
+                    {% for error in form.time.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+            <div class='form_group'>
+                {{ form.email.label }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class='error'>
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class='form_group'>
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+    </form>
+    </div>
+{% endblock %}
