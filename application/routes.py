@@ -1,91 +1,63 @@
-'''from flask_login import login_user, current_user, logout_user, login_required
-from application.models import Posts, Users
+from application.models import Hobby, Location
 from flask import render_template, redirect, url_for, request
 from application import app, db, bcrypt
-from application.forms import PostForm, RegistrationForm, LoginForm, UpdateAccountForm'''
+from application.forms import InterestForm, UpdateInterestForm, DeleteInterestForm
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = RegistrationForm()
+
+
+@app.route('/interest', methods=['GET', 'POST'])
+def interest():
+    form = InterestForm()
     if form.validate_on_submit():
-        hash_pw = bcrypt.generate_password_hash(form.password.data)
-
-        user = Users(first_name=form.first_name.data,last_name=form.last_name.data,email=form.email.data, password=hash_pw)
-
-        db.session.add(user)
+        locationData = Location(
+            l_name = form.l_name.data,
+            time = form.time.data
+        )
+        db.session.add(locationData)
         db.session.commit()
-
-        return redirect(url_for('post'))
-    return render_template('register.html', title='Register', form=form)
-
-
-@app.route('/post', methods=['GET', 'POST'])
-@login_required
-def post():
-    form = PostForm()
-    if form.validate_on_submit():
-        postData = Posts(
-            author = current_user,
-            title = form.title.data,
-            content = form.content.data
+        l_id = Location.query.filter_by(l_id=locationData.l_id).first()
+        hobbyData = Hobby(
+            name = form.name.data,
+            h_name = form.h_name.data,
+            email = form.email.data,
+            plans = l_id
         )
 
-        db.session.add(postData)
+        db.session.add(hobbyData)
         db.session.commit()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
 
     else:
         print(form.errors)
 
-    return render_template('post.html', title='Post', form=form)
+    return render_template('interest.html', title='Interests', form=form)
 
+
+
+@app.route('/plan')
+def plan():
+    hobbyData = Hobby.query.all()
+    locationData = Location.query.all()
+
+    return render_template('plan.html', title='Plans', hobby=hobbyData, location=locationData)
+    #hobby=hobbyData,location=locationData)
 
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    postData = Posts.query.all()
-    #postfirstname = Posts.query.get(first_name)
-    #postlastname = Posts.query.get(last_name)
-    #postcontent = Posts.query.get(content)
-    return render_template('home.html', title='HomePage',posts=postData)
+    return render_template('home.html', title='HomePage')
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html', title='This is the about page', body='This is the body but we are mising the head')
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = LoginForm()
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    form = UpdateInterestForm()
+    h_id = form.h_id.data
     if form.validate_on_submit():
-        user=Users.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            if next_page:
-                return redirect(next_page)
-            else:
-                return redirect(url_for('home'))
-    return render_template('login.html', title='Login', form=form)
-
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
-@app.route('/account', methods=['GET', 'POST'])
-@login_required
-def account():
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        current_user.first_name = form.first_name.data
+        #Hobby.plans.name = form.name.data
         current_user.last_name = form.last_name.data
         current_user.email = form.email.data
         db.session.commit()
@@ -94,20 +66,23 @@ def account():
         form.first_name.data = current_user.first_name
         form.last_name.data = current_user.last_name        
         form.email.data = current_user.email        
-    return render_template('account.html', title='Account', form=form)
+    return render_template('update.html', title='update plans', form=form)
 
 
-@app.route("/account/delete", methods=["GET", "POST"])
-@login_required
-def account_delete():
-    user = current_user.id
-    account = Users.query.filter_by(id=user).first()
-    logout_user()
-    posts = Posts.query.filter_by(user_id=user)
-    for post in posts:
-        db.session.delete(post)
-
-    db.session.delete(account)
+@app.route("/delete", methods=["GET", "POST"])
+def delete():
+    form = DeleteInterestForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        h_id = form.h_id.data
+    hobby = Hobby.query.filter_by(h_id=h_id)
+    location = Location.query.filter_by(h_id=h_id)
+    db.session.delete(hobby)
+    db.session.delete(location)
     db.session.commit()
 
-    return redirect(url_for('register'))
+    return render_template('delete.html', title='delete plans', form=form)
+    #return redirect(url_for('home'))
+
+

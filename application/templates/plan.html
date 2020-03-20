@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<a href="{{ url_for('home') }}">Home Page</a>
+<br>
+<a href="{{ url_for('interest') }}">Register interests</a>
+<h1>Everybody's plans!!!</h1>
+<p>Hope you tag along with others and enjoy!!!! :)</p>
+{% for hob in hobby %}
+    <div>
+        <span><i>Plan no: {{ hob.plans.l_id }}{{ hob.name }} is going to {{ hob.plans.l_name }}, {{ hob.h_name }} during the time of {{ hob.plans.time }}</i></span>
+    </div>
+{% endfor %}       
+{% endblock body_content %}

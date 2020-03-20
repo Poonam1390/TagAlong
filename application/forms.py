@@ -40,6 +40,12 @@ class InterestForm(FlaskForm):
 
 
 class UpdateInterestForm(FlaskForm):
+    h_id = StringField('H_id',
+        validators = [
+            DataRequired(),
+            Length(min=2, max=30)
+        ]
+    )
     name = StringField('Name',
         validators = [
             DataRequired(),
@@ -71,3 +77,26 @@ class UpdateInterestForm(FlaskForm):
         ]
     )
     submit = SubmitField('Update')
+
+
+
+class DeleteInterestForm(FlaskForm):
+    name = StringField('Name',
+        validators = [
+            DataRequired(),
+            Length(min=2, max=30)
+        ]
+    )
+    email = StringField('Email',
+        validators = [
+            DataRequired(),
+            Email()
+        ]
+    )
+    h_id = StringField('H_id',
+        validators = [
+            DataRequired(),
+            Length(min=2, max=30)
+        ]
+    )
+    submit = SubmitField('Delete')
