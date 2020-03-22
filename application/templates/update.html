@@ -1,9 +1,17 @@
 {% extends 'layout.html' %}
 {% block body_content %}
 <a href="{{ url_for('delete') }}">delete plans</a>
-
+<br>
+<br>
     <div class='form'>
         <form method='POST' action=''>
+            {% for hob in hobby %}
+    <div>
+        <span><i>Plan no: {{ hob.plans.l_id }} {{ hob.name }} is going to {{ hob.plans.l_name }}, {{ hob.h_name }} during the time of {{ hob.plans.time }}</i></span>
+    </div>
+    {% endfor %}
+    <br>
+    <br>
             {{ form.hidden_tag() }}
             {{ form.h_id.label }}
             {{ form.h_id }}

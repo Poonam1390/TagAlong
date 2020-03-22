@@ -27,12 +27,11 @@ def interest():
         db.session.add(hobbyData)
         db.session.commit()
 
-        
-
         return redirect(url_for('plan'))
 
     else:
         print(form.errors)
+    
 
     return render_template('interest.html', title='Interests', form=form)
 
@@ -43,8 +42,9 @@ def plan():
     hobbyData = Hobby.query.all()
     locationData = Location.query.all()
 
+
     return render_template('plan.html', title='Plans', hobby=hobbyData, location=locationData)
-    #hobby=hobbyData,location=locationData)
+   
 
 
 
@@ -58,6 +58,8 @@ def home():
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     form = UpdateInterestForm()
+    hobbyData = Hobby.query.all()
+    locationData = Location.query.all()
     if form.validate_on_submit():
         hob_id=form.h_id.data
         hobbyData=Hobby.query.filter_by(h_id=hob_id).first()
@@ -69,10 +71,12 @@ def update():
         
         db.session.commit()
         
+        
         return redirect(url_for('plan'))
     else:
         print(form.errors)
-    return render_template('update.html', title='Update plans', form=form)
+    
+    return render_template('update.html', title='Update plans', form=form,hobby=hobbyData, location=locationData)
 
 
 

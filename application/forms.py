@@ -34,7 +34,7 @@ class InterestForm(FlaskForm):
             Email()
         ]
     )
-    submit = SubmitField('Submit!')
+    submit = SubmitField('Register interest!')
 
 
 
