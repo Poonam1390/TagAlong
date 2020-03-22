@@ -2,19 +2,22 @@
 
 ## Index
 [Brief](#brief)
-   * [Overview and working of the application](#)
+   * [ Gist the application](#)
+
+[Overview of the application](#)
+   * [Solution](#)
    
 [Architecture](#architecture)
    * [Entity Relationship Diagram](#)
 	
 [Testing](#testing)
-   * [Report](#report)
-
      
 [Deployment Stage](#depl)
    * [Tools Used](#tech)
      
-[Front End Design](#FE)
+[Project tracking](#PTT)
+
+[Risk Assesment](#RA)
 
 [Improvements for the Future](#improve)
 
@@ -23,98 +26,85 @@
 [Acknowledgements](#ack)
 
 
+
 <a name="brief"></a>
 ## The Brief
 
-To create an OOP-based application with utilisation of supporting tools, methodologies and technologies that encapsulate all core modules covered during training. The application must manipulate two tables with full CRUD functionality.
+To create a Flask based application using tools and technologies that help build the CRUD functionality with a database that contains two tables.
 
-<a name="solution"></a>
-### Solution
 
-I decided to create a personal yoga application that would allow the user to create poses and routines, as well as add and remove poses from each routine.
+<a name="overview"></a>
+## Overview
 
-The many to many relationship between poses and routines is working, where poses can be added and removed from routines.
+Creation of an application which is called TagAlong that allows users to register their travel interests which includes their hobby, in the place that they are 
+
+doing it and the time of the year that they will be there to do the activity.Users can view plans of everyone and see if any plans align with theirs and then they 
+
+Tag along.
+
 
 <a name="architecture"></a>
 ## Architecture
 <a name="erd"></a>
-### Entity Relationship Diagrams
-#### Initial plan
-![Initial ERD](/Documentation/ERD_Initial_Plan.jpg)
+### Entity Relationship Diagram
+![ERD](/Documents/ERD.png)
 
-The initial plan for the ERD consisted of a lot more tables and entities than were produced in the final application. The tables are coloured based on how I had hoped to prioritise the features of the application, and therefore the order in which I would tackle them. Given the time constraints, I only managed to deliver two tables plus a join, as depicted below
-
-#### Delivered solution
-![Final ERD](/Documentation/ERD_Final.jpg)
-
-As shown in this ERD, I ended up changing the focus of the initial tables. After building the first entity (poses), I concluded it made more sense to continue making a routine table first, encompassing a many-to-many relationship between the two. My reasoning was that it would make for a more interesting user experience to create routines from the poses, rather than arbitrarily add health benefits to each pose.
-
-<a name="mla"></a>
-### Multi Tier Architecture Diagram
-Please click on the diagram for a high resolution version:
-![MTA](/Documentation/MTA.jpg)
-
-This is a very high-level architecture diagram to demonstrate the architecture of the application. It does not include getters and setters, test classes, or constants classes. 
+As shown in the ERD, the DB consists of two tables which initially was three tables that consisted of a User.As later on to keep the application simple, I removed the User table to have just the hobby-travel plan registerations without login.
+The tables have a Many-to-one relation between them as shown, hence I did not need an intermediate table.
 
 
 <a name="testing"></a>
 ## Testing
 
-JUnit, Mockito and Selenium tests have been used for automated testing, and SonarLint/SonarQube for static reporting and refactoring.
+Pytest has been used for testing.Test coverage for the backend is % .
+There can be more improvements in the next coming sprints on the testing and application front.
 
-<a name="report"></a>
-### Report
 
-[Link to Final Surefire Report](/Documentation/Surefire_Report.pdf)
+<a name="deployment"></a>
+## Deployment Stage
 
-Test coverage for the backend is at 84%, there are as of yet no working Selenium tests but hope to get these running soon.
-The SonarQube static report shows 9 code smells remaining, 0 bugs, 0 duplications and 0 vulnerabilities.
+The build, and deployment process is automated using Jenkins, that was triggered whenever there was a push even on GitHub which was setup using a webhook
 
-<a name="depl"></a>
-## Deployment
+![Deployment Pipeline](/Documents/CI_pipeline.png)
 
-The build, test and deployment process was automated using Jenkins, with a webhook to GitHub which was triggered with every push event
 
-This application can be deployed both locally and externally through a virtual machine. The constants.js file has commented out options to switch from an external to local IP address.
+<a name="Tools"></a>
+### Tools Used
 
-![Deployment Pipeline](/Documentation/CI_pipeline.jpg)
-<a name="tech"></a>
-### Technologies Used
-
-* H2 Database Engine - Database
-* Java - Logic
-* Wildfly - Deployment
+* Google Cloud Platform's SQL instance - Database
+* Python and Flask framework - Logic
 * Jenkins - CI Server
-* Maven - Dependency Management
-* Jacoco, EclEmma, Surefire - Test Reporting
-* SonarQube - Static Testing
-* [Git](https://github.com/ayshamarty/SoloProject.git) - VCS
-* [Trello](https://trello.com/qasoloproject) - Project Tracking
-* GCP - Live Environment
+* PyTest - Testing
+* [Git](https://github.com/Poonam1390/TagAlong.git) - Version Control Tool
+* [Trello](https://trello.com/b/dhgxajA2/tag-along) - Project Tracking
+* Google Cloud Platform - Live Environment
 
-<a name="FE"></a>
-## Front End Design
-### Wireframes
-Poses
-![Poses Wireframe](/Documentation/Poses_Wireframe.png)
-Routines
-![Routines Wireframe](/Documentation/Routines_Wireframe.png)
-### Final Appearance
 
 <a name="improve"></a>
 ## Improvements for the Future
 
-Currently, IDs are required to update poses and routines, and to add or remove poses from routines. In my next sprint, I would like to create buttons in the front end which allow this functionality without the need for IDs, which would allow the object IDs to be hidden from the user.
+At this point, to update the hobby-travel plan , you need to enter the entire data again along with the plan no which is the ID referenced in the table and also to delete the plan you need to enter the plan ID as there is no login involved to delete only your plans registered.
 
-In later sprints, I would also like create a health-benefit entity which would have a many to many relationship with poses, so that users can create routines based on their focus for their practice. After this, I would add the capability to create different user accounts. At this point, I would remove the functionality for the user to add and remove poses themselves in the front end. These would instead be hard coded into the database, which the user could manipulate only for adding and removing them from their own routines.
+In the coming sprints, I would like to add the login functionality so its easier to do the update and delete functionality.Another improvement would be to add the functionality to send emails to the first created hobby-travel plan if the plan registrered by the user matches with the already created hobby-travel plan.
 
-<a name="auth"></a>
+
+<a name="tracking"></a>
+## Project tracking
+![Project tracker](/Documents/Trello_board.png)
+
+
+<a name="Risks"></a>
+## Risk Assesment
+![Risk Register](/Documents/Risk_Register.png)
+
+
+<a name="author"></a>
 ## Authors
 
-Aysha Marty
+Poonam Udevar Mohankumar
 
 <a name="ack"></a>
 ## Acknowledgements
 
 * QA consulting and our fantastic instructors
-* The rest of our wonderful cohort on the programme
+* The amazing and fun cohorts on this DevOps programme
