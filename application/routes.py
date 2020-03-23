@@ -83,6 +83,8 @@ def update():
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
     form = DeleteInterestForm()
+    hobbyData = Hobby.query.all()
+    locationData = Location.query.all()
     if form.validate_on_submit():
         hob_id = form.h_id.data
         hobbyData=Hobby.query.filter_by(h_id=hob_id).first()
@@ -93,7 +95,7 @@ def delete():
         return redirect(url_for('plan'))
     else:
         print(form.errors)
-    return render_template('delete.html', title='Delete plans', form=form)
+    return render_template('delete.html', title='Delete plans', form=form,hobby=hobbyData, location=locationData)
 
 
 

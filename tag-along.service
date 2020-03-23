@@ -2,9 +2,9 @@
 Description=Flask Application
 [Service]
 User=pythonadm
-WorkingDirectory=/opt/flask-app
+WorkingDirectory=/opt/TagAlong
 ExecStart=/bin/bash \
-    -c 'cd /opt/flask-app && \
+    -c 'cd /opt/TagAlong && \
     . ./venv/bin/activate && \
     python3 ./app.py'
 Environment=SECRET_KEY={{SECRET_KEY}}
