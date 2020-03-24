@@ -86,6 +86,7 @@ class UpdateInterestForm(FlaskForm):
 
 
 
+
 class DeleteInterestForm(FlaskForm):
     h_id = StringField('Plan no',
         validators = [
