@@ -62,16 +62,22 @@ def update():
     locationData = Location.query.all()
     if form.validate_on_submit():
         hob_id=form.h_id.data
-        hobbyData=Hobby.query.filter_by(h_id=hob_id).first()
-        hobbyData.h_name=form.h_name.data,
-        hobbyData.name=form.name.data,
-        hobbyData.email=form.email.data
-        hobbyData.plans.time=form.time.data,
-        hobbyData.plans.l_name=form.l_name.data
-        
-        db.session.commit()
-        
-        
+
+        for hobs in hobbyData:
+            if hobs.h_id==hob_id:
+                hobbyData=Hobby.query.filter_by(h_id=hob_id).first()
+
+                hobbyData.h_name=form.h_name.data,
+                hobbyData.name=form.name.data,
+                hobbyData.email=form.email.data
+                hobbyData.plans.time=form.time.data,
+                hobbyData.plans.l_name=form.l_name.data
+                
+                db.session.commit()
+                
+                return redirect(url_for('plan'))
+
+        print("This plan is not registred")
         return redirect(url_for('plan'))
     else:
         print(form.errors)
@@ -87,10 +93,14 @@ def delete():
     locationData = Location.query.all()
     if form.validate_on_submit():
         hob_id = form.h_id.data
-        hobbyData=Hobby.query.filter_by(h_id=hob_id).first()
+        for hobs in hobbyData:
+            if hobs.h_id==hob_id:
+                hobbyData=Hobby.query.filter_by(h_id=hob_id).first()
 
-        db.session.delete(hobbyData)
-        db.session.commit()
+                db.session.delete(hobbyData)
+                db.session.commit()
+
+                return redirect(url_for('plan'))
 
         return redirect(url_for('plan'))
     else:

@@ -36,6 +36,12 @@ class InterestForm(FlaskForm):
     )
     submit = SubmitField('Register interest!')
 
+    def validate_email(self, email):
+        user = Hobby.query.filter_by(email=email.data).first()
+
+        if user:
+            raise ValidationError('Email already in use')
+
 
 
 

@@ -2,7 +2,7 @@
 
 ## Index
 [Brief](#brief)
-   * [ Gist the application](#)
+   * [ Gist of the application](#)
 
 [Overview of the application](#)
    * [Solution](#)
@@ -41,6 +41,7 @@ Creation of an application which is called TagAlong that allows users to registe
 doing it and the time of the year that they will be there to do the activity.Users can view plans of everyone and see if any plans align with theirs and then they 
 
 Tag along.
+
 
 
 <a name="architecture"></a>

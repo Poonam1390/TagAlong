@@ -48,14 +48,38 @@ class TestViews(TestBase):
 
     def test_homepage_view(self):
         """
-        Test that homepage is accessible without login
+        Test that homepage is accessible
+        """
+        response = self.client.get(url_for('home'))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_interestpage_view(self):
+        """
+        Test that interestpage is accessible
         """
         response = self.client.get(url_for('home'))
         self.assertEqual(response.status_code, 200)
 
+    
+    def test_planpage_view(self):
+        """
+        Test that planpage is accessible
+        """
+        response = self.client.get(url_for('home'))
+        self.assertEqual(response.status_code, 200)
 
-'''def test_postpage_view(self):
-        target_url = url_for('post')
-        redirect_url = url_for('login',next=target_url)
-        response = self.client.get(url_for('post'))
-        self.assertRedirects(response,redirect_url)'''
+    
+    def test_updatepage_view(self):
+        """
+        Test that updatepage is accessible
+        """
+        response = self.client.get(url_for('home'))
+        self.assertEqual(response.status_code, 200)
+
+    
+    def test_deletepage_view(self):
+        """
+        Test that deletepage is accessible without login
+        """
+        response = self.client.get(url_for('home'))
+        self.assertEqual(response.status_code, 200)
